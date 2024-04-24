@@ -1,6 +1,7 @@
-package Network;
+package NetworkServer;
 
 import LibraryDatabase.LibraryItem;
+import LibraryDatabase.MongoDBLibrary;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +15,15 @@ import static LibraryDatabase.MongoDBLibrary.addItem;
 public class Server {
 
     public static void main(String[] args){
+        //make new items and add it to te database
+
+//        ArrayList<LibraryItem> LibIt = new ArrayList<>();
+//        LibraryItem HeartStopper = new LibraryItem("Graphic Novel", "HeartStopper", "Alice Oseman", "Alice Oseman");
+//        LibraryItem TSOA = new LibraryItem("Book", "The Song of Achilles", "Madeline Miller", "n/a");
+//        LibIt.add(HeartStopper);
+//        LibIt.add(TSOA);
+        //MongoDBLibrary.main(LibIt);
+
         new Server().setupNetworking();
 
     }

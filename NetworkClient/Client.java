@@ -1,5 +1,6 @@
-package Network;
+package NetworkClient;
 
+import GUIs.MainGUI;
 import LibraryDatabase.LibraryItem;
 
 import java.io.IOException;
@@ -14,13 +15,13 @@ public class Client {
 
     public static void main (String[] args){
         new Client().setupNetworking();
-        LibraryItem
     }
 
     private void setupNetworking(){
         try{
-            Socket socket = new Socket("local host", 1024);
+            Socket socket = new Socket("localhost", 1024);
             System.out.println("network established");
+            MainGUI.main(new String[] {"poop"});
 
             LibraryItem ent = new LibraryItem("Book", "The Song of Achilles", "Madeline Miller", "n/a");
             System.out.println("Sending book: " + ent);
