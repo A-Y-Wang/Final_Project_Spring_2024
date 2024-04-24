@@ -28,7 +28,7 @@
                   <Image url="@tighnari_emote.png" />
                </image>
             </ImageView>
-            <Button layoutX="815.0" layoutY="12.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="76.0" text="Sign out">
+            <Button fx:id="signout" layoutX="815.0" layoutY="12.0" mnemonicParsing="false" onAction="#signoutButton" prefHeight="32.0" prefWidth="76.0" text="Sign out">
                <font>
                   <Font name="Cambria" size="14.0" />
                </font>

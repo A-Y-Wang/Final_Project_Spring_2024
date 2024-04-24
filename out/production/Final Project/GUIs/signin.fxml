@@ -30,7 +30,7 @@
             <Font name="FangSong" size="29.0" />
          </font>
       </Label>
-      <Button layoutX="363.0" layoutY="422.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="90.0" text="New User?">
+      <Button fx:id="newuser" layoutX="363.0" layoutY="422.0" mnemonicParsing="false" onAction="#newuserButton" prefHeight="35.0" prefWidth="90.0" text="New User?">
          <font>
             <Font name="FangSong" size="15.0" />
          </font>

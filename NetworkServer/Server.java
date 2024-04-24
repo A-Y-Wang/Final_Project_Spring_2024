@@ -27,10 +27,8 @@ public class Server {
         new Server().setupNetworking();
 
     }
-
     List<Socket> sockets = new ArrayList<Socket>();
     //each user has a socket for which they communicate to the database
-
 
     private void setupNetworking(){
         try{
