@@ -48,7 +48,7 @@ public class LoginController{
     public void newuserButton(){
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);  // Block events to other windows
-        popupStage.setTitle("New User");
+        popupStage.setTitle("New User Account");
 
         // Create a button to close the popup
         Label label = new Label("Not a current user? Set up an account!");
@@ -69,8 +69,8 @@ public class LoginController{
         closeButton.setOnAction(e -> {
             try {
                 LibraryUsers NewUser = new LibraryUsers(userNAME.getText(), passWORD.getText());
-                client.processRequest(new Instruction("New User", null, NewUser));
-                ArrayList<Instruction> test = client.recievemessage();
+                ArrayList<Instruction> test = client.processRequest(new Instruction("New User", null, NewUser));
+
                 if (test.isEmpty()){
                     System.out.println("empty");
                 }
@@ -87,12 +87,9 @@ public class LoginController{
                     }
                 }
                 client.clearmessage();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
+            } catch (IOException ex) {}
+
+             catch (ClassNotFoundException ex) { }
             popupStage.close();
         });
         Scene popupScene = new Scene(popupContent, 300, 200);
@@ -101,11 +98,10 @@ public class LoginController{
 
     }
 
-    public void logonButton() throws IOException, InterruptedException {
+    public void logonButton() throws IOException, InterruptedException, ClassNotFoundException {
 
         LibraryUsers login = new LibraryUsers(username.getText(), password.getText());
-        client.processRequest(new Instruction("Login", null, login ));
-        ArrayList<Instruction> test = client.recievemessage();
+        ArrayList<Instruction> test = client.processRequest(new Instruction("Login", null, login ));
         if (test.isEmpty()){
             System.out.println("empty");
         }
@@ -120,6 +116,16 @@ public class LoginController{
                 case "User Doesn't Exist":
                     System.out.println(testInstruction.getLibraryUser());;
                     System.out.println("Not Valid User");
+
+
+                    Stage popupStage = new Stage();
+                    popupStage.initModality(Modality.APPLICATION_MODAL);  // Block events to other windows
+                    popupStage.setTitle("ERROR");
+                    StackPane popupContent = new StackPane();
+                    Scene popupScene = new Scene(popupContent, 300, 200);
+                    popupStage.setScene(popupScene);
+                    popupStage.showAndWait();
+
                     break;
             }
         }

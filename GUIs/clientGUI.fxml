@@ -39,7 +39,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="365.0">
                            <children>
-                              <VBox fx:id="bookbox" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
+                              <VBox fx:id="bookbox" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -97,30 +97,20 @@
                   <Font name="FangSong" size="18.0" />
                </font>
             </Label>
-            <VBox layoutX="385.0" layoutY="191.0" prefHeight="291.0" prefWidth="246.0">
+            <VBox layoutX="385.0" layoutY="52.0" prefHeight="430.0" prefWidth="246.0">
                <children>
-                  <Label prefHeight="18.0" prefWidth="65.0" text="My Items">
+                  <Label prefHeight="18.0" prefWidth="65.0" text="My Items" textFill="WHITE">
                      <font>
-                        <Font name="Cambria" size="14.0" />
+                        <Font name="Cambria" size="15.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="286.0" prefWidth="246.0">
+                  <ScrollPane prefHeight="463.0" prefWidth="246.0">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="250.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="414.0" prefWidth="250.0" />
                      </content>
                   </ScrollPane>
                </children>
             </VBox>
-            <Button layoutX="734.0" layoutY="158.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="66.0" text="Check out">
-               <font>
-                  <Font name="Cambria" size="11.0" />
-               </font>
-            </Button>
-            <ScrollPane layoutX="386.0" layoutY="52.0" prefHeight="133.0" prefWidth="342.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="127.0" prefWidth="343.0" />
-              </content>
-            </ScrollPane>
             <Button layoutX="471.0" layoutY="554.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Click Here">
                <font>
                   <Font name="Cambria" size="13.0" />
@@ -131,35 +121,6 @@
                   <Font name="Cambria" size="13.0" />
                </font>
             </Label>
-            <Button layoutX="810.0" layoutY="158.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="66.0" text="Hold">
-               <font>
-                  <Font name="Cambria" size="11.0" />
-               </font>
-            </Button>
-            <Button layoutX="734.0" layoutY="52.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="66.0" text="Remove">
-               <font>
-                  <Font name="Cambria" size="11.0" />
-               </font>
-            </Button>
-            <VBox layoutX="642.0" layoutY="191.0" prefHeight="354.0" prefWidth="244.0">
-               <children>
-                  <Label prefHeight="18.0" prefWidth="65.0" text="Returns">
-                     <font>
-                        <Font name="Cambria" size="14.0" />
-                     </font>
-                  </Label>
-                  <ScrollPane prefHeight="336.0" prefWidth="234.0">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="338.0" prefWidth="235.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </VBox>
-            <Button layoutX="820.0" layoutY="553.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="66.0" text="Return">
-               <font>
-                  <Font name="Cambria" size="13.0" />
-               </font>
-            </Button>
             <TextField layoutX="660.0" layoutY="13.0" prefHeight="26.0" prefWidth="150.0" />
          </children>
       </AnchorPane>

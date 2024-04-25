@@ -24,14 +24,6 @@ public class MainGUI extends Application {
 
         }
 
-//        private void setUpNetworking() throws IOException {
-//            Socket sock = new Socket("localhost", 1024);
-//            InputStreamReader streamReader = new InputStreamReader(sock.getInputStream());
-//            reader = new BufferedReader(streamReader);
-//            writer = new PrintWriter((sock.getOutputStream()));
-//            System.out.println("gui connected");
-//        }
-
         public void openLogin(Stage stage) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
             Scene scene = new Scene(loader.load());

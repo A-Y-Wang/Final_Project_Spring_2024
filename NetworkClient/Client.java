@@ -26,9 +26,10 @@ public class Client{
     //connect to gui so clients can see what they retrieved from the Library
     Lock lock = new ReentrantLock();
     private Socket socket;
-    public final ArrayList<Instruction> returnToGUI = new ArrayList<>();
+    public ArrayList<Instruction> returnToGUI = new ArrayList<>();
     ObjectOutputStream outee;
     ObjectInputStream innee;
+    Instruction getin;
 
 
 //    public static void main (String[] args) {
@@ -42,83 +43,18 @@ public class Client{
             outee = new ObjectOutputStream(socket.getOutputStream());
             innee = new ObjectInputStream(socket.getInputStream());
 
-            Thread service = new Thread(new ServerHandler(socket, outee, innee, returnToGUI));
-            service.start();
-
-
         }catch(IOException ioe){
             System.out.println("fork");
         }
     }
-
-    class ServerHandler implements Runnable {
-        private Socket clientSocket;
-        private ObjectOutputStream outee;
-        private ObjectInputStream innee;
-        Instruction getin;
-
-        public ServerHandler(Socket clientSocket, ObjectOutputStream out, ObjectInputStream in, ArrayList<Instruction> returnToGUI) {
-            this.clientSocket = clientSocket;
-            this.outee = out;
-            this.innee = in;
-
-        }
-
-        public void run() {
-            while(true) {
-                try {
-                    lock.lock();
-                        if ((getin = (Instruction) innee.readObject()) != null) {
-                            returnToGUI.add(getin);
-                            System.out.println(getin);
-                            //System.out.println(getin);
-                            //find this item
-                        }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                finally {lock.unlock();}
-            }
-        }
-    }
-
-
-//    public void setupNetworking(){
-//        try{
-//                socket = new Socket("localhost", 1024);
-//                System.out.println("network established");
-////            newGU.start(mainstage);
-//                // MainGUI.main(new String[] {"poop"});
-//
-////            LibraryItem ent = new LibraryItem("Book", "The Song of Achilles", "Madeline Miller", "n/a");
-////            System.out.println("Sending book: " + ent);
-////            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-////            oos.writeObject(ent);
-////            oos.flush();
-//        }
-//        catch (IOException ioe){
-//            ioe.printStackTrace();
-//            System.out.println("oh no");
-//        }
-//    }
-
-
     //set some bools so then it determines what the gui outputs
-    public void processRequest(Instruction tellMe) throws IOException {
+    public ArrayList<Instruction> processRequest(Instruction tellMe) throws IOException, ClassNotFoundException {
         outee.reset();
         outee.writeObject(tellMe);
         outee.flush();
-
-    }
-
-    public ArrayList<Instruction> recievemessage() throws InterruptedException {
-        Thread.sleep(200);
-        synchronized (lock) {
-            return new ArrayList<>(returnToGUI);
-
-        }
+        getin = (Instruction) innee.readObject();
+        returnToGUI.add(getin);
+        return new ArrayList<>(returnToGUI);
     }
 
     public void clearmessage(){

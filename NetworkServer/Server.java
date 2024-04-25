@@ -43,7 +43,6 @@ public class Server {
             ObjectOutputStream outin;
             ObjectInputStream inout;
 
-
             while(true){
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("incoming transmission");
@@ -110,23 +109,8 @@ public class Server {
 
                     }
 
-//                    if (recieve instanceof LibraryUsers) {
-////                    addUser((LibraryUsers) recieve);
-//                        System.out.println("got a library user");
-//                        String hi = "i want to kms if this doesnt work";
-//                        outin.writeObject(hi);
-//                        outin.flush();
-//                        System.out.println("info sent to client");
-////                    LibraryItem C = new LibraryItem("Book", "Circe", "Madeline Miller", "n/a");
-////                    addItem(C);
-//                    }
-//                    if (recieve instanceof LibraryItem) {
-//                        addItem((LibraryItem) recieve);
-//                        System.out.println("got a library item");
-//                        System.out.println("Got the Book: " + recieve);
-//                    }
-                    //find this item
-                } catch (IOException | ClassNotFoundException ioe) {
+                }
+                catch (IOException | ClassNotFoundException ioe) {
                 }
             }
         }
