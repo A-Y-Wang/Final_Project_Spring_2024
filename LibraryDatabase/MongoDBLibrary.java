@@ -45,13 +45,9 @@ public class MongoDBLibrary {
         collection1 = database.getCollection(COLLECTION1, LibraryUsers.class);
 
 
-        LibraryUsers Chris = new LibraryUsers("chrispoopoo", "12345");
-        collection1.insertOne(Chris);
-        //addItem
-        //updateItem
-//      for (LibraryItem potbooks: PotenialBooks){
-//           addItem(potbooks);
-//        }
+//        LibraryUsers Chris = new LibraryUsers("chrispoopoo", "12345");
+//        collection1.insertOne(Chris);
+
     }
 
      public static void addItem(LibraryItem items) {
@@ -60,9 +56,24 @@ public class MongoDBLibrary {
             collection.insertOne(items);
             return;
         }
-        items.setAmount(checkItem.getAmount()+1);
+        items.setAmount(checkItem.getAmount()+items.getAmount());
         collection.findOneAndReplace(Filters.eq("title", items.getTitle()), items);
+     }
 
+     public static void addUser(LibraryUsers libuser ){
+         LibraryUsers checkUser = collection1.find(Filters.eq("username", libuser.getUsername())).first();
+         if(checkUser== null){
+             collection1.insertOne(libuser);
+         }//return true is the user is in the database
+
+     }
+
+     public boolean isUser(LibraryUsers libussy){
+         LibraryUsers checkUser = collection1.find(Filters.eq("username", libussy.getUsername())).first();
+         if(checkUser == null){
+             return false;
+         }
+         return true;
      }
 
      //public static void addImage()

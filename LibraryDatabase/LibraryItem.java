@@ -16,12 +16,12 @@ public class LibraryItem implements Serializable {
 
     public LibraryItem(){}
 
-    public LibraryItem(String typee, String tit, String aut, String ill){
+    public LibraryItem(String typee, String tit, String aut, String ill, int num){
         this.type= typee;
         this.title = tit;
         this.author = aut;
         this.illustrator = ill;
-        this.amount = 1;
+        this.amount = num;
 
     }
     public String getType(){

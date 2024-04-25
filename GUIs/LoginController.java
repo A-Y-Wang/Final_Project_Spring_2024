@@ -1,10 +1,12 @@
 package GUIs;
 
+import LibraryDatabase.LibraryUsers;
 import NetworkClient.Client;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -42,6 +44,7 @@ public class LoginController{
         popupStage.setTitle("New User");
 
         // Create a button to close the popup
+        Label label = new Label("Not a current user? Set up an account!");
         Button closeButton = new Button("Enter");
         TextField userNAME = new TextField();
         TextField passWORD = new TextField();
@@ -52,12 +55,16 @@ public class LoginController{
         // Layout for the popup
         StackPane popupContent = new StackPane();
         popupContent.getChildren().add(vbox);
+        vbox.getChildren().add(label);
         vbox.getChildren().add(userNAME);
         vbox.getChildren().add(passWORD);
         vbox.getChildren().add(closeButton);
         closeButton.setOnAction(e -> {
-            Username = userNAME.getText();
-            Password = passWORD.getText();
+            try {
+                client.addNewUser(new LibraryUsers(userNAME.getText(), passWORD.getText()));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             popupStage.close();
         });
         Scene popupScene = new Scene(popupContent, 300, 200);
@@ -67,6 +74,7 @@ public class LoginController{
     }
 
     public void logonButton() throws IOException {
+
         client.recievemessage("hi");
         Stage stagey = (Stage)logon.getScene().getWindow();
         maingui.loadMainScreen(stagey);

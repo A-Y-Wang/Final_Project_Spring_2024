@@ -22,10 +22,6 @@ public class MainGUI extends Application {
         public void start(Stage applicationStage) throws IOException {
             openLogin(applicationStage);
 
-//            try {
-//                setUpNetworking();
-//            } catch(IOException ioe){
-//            }
         }
 
 //        private void setUpNetworking() throws IOException {
@@ -55,9 +51,9 @@ public class MainGUI extends Application {
             FXMLLoader loader1 = new FXMLLoader(MainGUI.class.getResource("clientGUI.fxml"));
             Parent root = loader1.load();
 
-            ClientController clientController = loader1.getController();
-            clientController.setMainApp(this);
-            clientController.setClient(client);
+            MainMenuController mainController = loader1.getController();
+            mainController.setMainApp(this);
+            mainController.setClient(client);
             //Scene scene = new Scene(root);
             root.setScaleY(1.5);
             root.setScaleX(1.5);

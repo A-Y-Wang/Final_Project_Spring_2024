@@ -1,6 +1,8 @@
 package LibraryDatabase;
 
-public class LibraryUsers {
+import java.io.Serializable;
+
+public class LibraryUsers implements Serializable {
     private String username;
     private String password;
 
@@ -15,5 +17,10 @@ public class LibraryUsers {
 
     public String getPassword(){
         return this.password;
+    }
+
+    @Override
+    public String toString(){
+        return "Username: "+this.username + "\n"+ "Password: "+this.password;
     }
 }

@@ -1,18 +1,24 @@
 package NetworkServer;
 
 import LibraryDatabase.LibraryItem;
+import LibraryDatabase.LibraryUsers;
 import LibraryDatabase.MongoDBLibrary;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 import static LibraryDatabase.MongoDBLibrary.addItem;
+import static LibraryDatabase.MongoDBLibrary.addUser;
+
 
 public class Server {
+
+    ServerSocket serverSocket;
 
     public static void main(String[] args){
         //make new items and add it to te database
@@ -23,7 +29,7 @@ public class Server {
 //        LibIt.add(HeartStopper);
 //        LibIt.add(TSOA);
         //MongoDBLibrary.main(LibIt);
-
+        //MongoDBLibrary.main(new String[]{});
         new Server().setupNetworking();
 
     }
@@ -32,39 +38,65 @@ public class Server {
 
     private void setupNetworking(){
         try{
-            ServerSocket server = new ServerSocket(1024);
+            serverSocket = new ServerSocket(1024);
+            ObjectOutputStream outin;
+            ObjectInputStream inout;
+
+
             while(true){
-                Socket clientSocket = server.accept();
+                Socket clientSocket = serverSocket.accept();
                 System.out.println("incoming transmission");
 
                 sockets.add(clientSocket);
 
-                Thread t = new Thread(new ClientHandler(clientSocket));
-                t.start();
+                outin = new ObjectOutputStream(clientSocket.getOutputStream());
+                inout = new ObjectInputStream(clientSocket.getInputStream());
+
+                Thread clients = new Thread(new ClientHandler(clientSocket, outin, inout));
+                clients.start();
             }
         }
-        catch(IOException ioe) {
+        catch(IOException | ClassNotFoundException ioe) {
             System.out.println("grrr");
         }
     }
+
 
     //marks the book as borrowed
     class ClientHandler implements Runnable{
 
         private Socket clientSocket;
-
-        ClientHandler(Socket clientSocket){
+        private ObjectOutputStream outin;
+        private ObjectInputStream inout;
+        ClientHandler(Socket clientSocket, ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
             this.clientSocket = clientSocket;
+            this.outin = out;
+            this.inout = in;
         }
-        public void run(){
-            try{
-                LibraryItem item = (LibraryItem) (new ObjectInputStream(clientSocket.getInputStream()).readObject());
-                System.out.println("Got the Book: " + item);
-                //find this item
-            }
-            catch(IOException ioe) {}
 
-            catch(ClassNotFoundException cnfe){}
+        public void run() {
+            while(true) {
+                try {
+                    Object recieve = inout.readObject();
+                    if (recieve instanceof LibraryUsers) {
+//                    addUser((LibraryUsers) recieve);
+                        System.out.println("got a library user");
+                        String hi = "i want to kms if this doesnt work";
+                        outin.writeObject(hi);
+                        outin.flush();
+                        System.out.println("info sent to client");
+//                    LibraryItem C = new LibraryItem("Book", "Circe", "Madeline Miller", "n/a");
+//                    addItem(C);
+                    }
+                    if (recieve instanceof LibraryItem) {
+                        addItem((LibraryItem) recieve);
+                        System.out.println("got a library item");
+                        System.out.println("Got the Book: " + recieve);
+                    }
+                    //find this item
+                } catch (IOException | ClassNotFoundException ioe) {
+                }
+            }
         }
     }
 }

@@ -3,10 +3,9 @@ package GUIs;
 import NetworkClient.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 
 
-public class ClientController {
+public class MainMenuController {
 
 
     private Client client;
@@ -24,6 +23,10 @@ public class ClientController {
 
 
     public void initialize(){
+        //need a seperate thread that populates and updates the catalog?
+        //updates how many of the books are left
+        //reds or greys when there are 0 books
+        //decrements on the display but does it need to decrement in the database??
 
     }
 
