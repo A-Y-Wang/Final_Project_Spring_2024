@@ -1,5 +1,6 @@
 package NetworkServer;
 
+import LibraryDatabase.Instruction;
 import LibraryDatabase.LibraryItem;
 import LibraryDatabase.LibraryUsers;
 import LibraryDatabase.MongoDBLibrary;
@@ -12,9 +13,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import static LibraryDatabase.MongoDBLibrary.addItem;
-import static LibraryDatabase.MongoDBLibrary.addUser;
-
+import static LibraryDatabase.MongoDBLibrary.*;
+//database should store who currently has the book and then move them to who
+// had that book in a different database
 
 public class Server {
 
@@ -29,7 +30,7 @@ public class Server {
 //        LibIt.add(HeartStopper);
 //        LibIt.add(TSOA);
         //MongoDBLibrary.main(LibIt);
-        //MongoDBLibrary.main(new String[]{});
+        MongoDBLibrary.main(new String[]{});
         new Server().setupNetworking();
 
     }
@@ -77,22 +78,53 @@ public class Server {
         public void run() {
             while(true) {
                 try {
-                    Object recieve = inout.readObject();
-                    if (recieve instanceof LibraryUsers) {
-//                    addUser((LibraryUsers) recieve);
-                        System.out.println("got a library user");
-                        String hi = "i want to kms if this doesnt work";
-                        outin.writeObject(hi);
-                        outin.flush();
-                        System.out.println("info sent to client");
-//                    LibraryItem C = new LibraryItem("Book", "Circe", "Madeline Miller", "n/a");
-//                    addItem(C);
+                    Instruction recieve = (Instruction)inout.readObject();
+                    switch(recieve.getInstruction()){
+                        case "New User":
+                            System.out.println("got a library user");
+                            boolean confirmedNewUser = addUser(recieve.getLibraryUser());
+                            if (confirmedNewUser){
+                                outin.writeObject(new Instruction("New User Confirmed", null, recieve.getLibraryUser()));
+                                outin.flush();
+                            }
+                            else {
+                                outin.writeObject(new Instruction("New User Denied", null, recieve.getLibraryUser()));
+                                outin.flush();
+                            }
+                            System.out.println("info sent to client");
+                            break;
+
+                        case "Login":
+                            System.out.println("attempt to login");
+                            boolean isLibraryUser = isUser(recieve.getLibraryUser());
+                            if (isLibraryUser){
+                                outin.writeObject(new Instruction("User Exists", null, recieve.getLibraryUser()));
+                                outin.flush();
+                            }
+                            else {
+                                outin.writeObject(new Instruction("User Doesn't Exist", null, recieve.getLibraryUser()));
+                                outin.flush();
+                            }
+                            System.out.println("info sent to client");
+                            break;
+
                     }
-                    if (recieve instanceof LibraryItem) {
-                        addItem((LibraryItem) recieve);
-                        System.out.println("got a library item");
-                        System.out.println("Got the Book: " + recieve);
-                    }
+
+//                    if (recieve instanceof LibraryUsers) {
+////                    addUser((LibraryUsers) recieve);
+//                        System.out.println("got a library user");
+//                        String hi = "i want to kms if this doesnt work";
+//                        outin.writeObject(hi);
+//                        outin.flush();
+//                        System.out.println("info sent to client");
+////                    LibraryItem C = new LibraryItem("Book", "Circe", "Madeline Miller", "n/a");
+////                    addItem(C);
+//                    }
+//                    if (recieve instanceof LibraryItem) {
+//                        addItem((LibraryItem) recieve);
+//                        System.out.println("got a library item");
+//                        System.out.println("Got the Book: " + recieve);
+//                    }
                     //find this item
                 } catch (IOException | ClassNotFoundException ioe) {
                 }

@@ -6,6 +6,8 @@ public class LibraryUsers implements Serializable {
     private String username;
     private String password;
 
+    public LibraryUsers(){}
+
     public LibraryUsers(String n, String p){
         this.username = n;
         this.password = p;

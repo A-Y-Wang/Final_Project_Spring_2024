@@ -31,6 +31,5 @@ public class MainMenuController {
     }
 
     public void signoutButton(){
-        client.recievemessage("bye");
     }
 }

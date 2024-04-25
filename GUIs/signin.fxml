@@ -45,6 +45,6 @@
             <Font name="Gabriola" size="26.0" />
          </font>
       </Button>
-      <PasswordField layoutX="275.0" layoutY="374.0" prefHeight="35.0" prefWidth="251.0" promptText="Password" />
+      <PasswordField fx:id="password" layoutX="275.0" layoutY="374.0" prefHeight="35.0" prefWidth="251.0" promptText="Password" />
    </children>
 </AnchorPane>

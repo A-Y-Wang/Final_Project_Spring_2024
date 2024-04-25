@@ -1,7 +1,8 @@
 package NetworkClient;
 
-import GUIs.ClientController;
+import GUIs.MainMenuController;
 import GUIs.MainGUI;
+import LibraryDatabase.Instruction;
 import LibraryDatabase.LibraryItem;
 import LibraryDatabase.LibraryUsers;
 import NetworkServer.Server;
@@ -13,16 +14,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static LibraryDatabase.MongoDBLibrary.addItem;
-import static LibraryDatabase.MongoDBLibrary.addUser;
-
 public class Client{
     //are these supposed to all be in 1 package??
 
     //manages user log in retrieving books from the server??
     //connect to gui so clients can see what they retrieved from the Library
+    Lock lock = new ReentrantLock();
     private Socket socket;
+    public final ArrayList<Instruction> returnToGUI = new ArrayList<>();
     ObjectOutputStream outee;
     ObjectInputStream innee;
 
@@ -38,7 +42,7 @@ public class Client{
             outee = new ObjectOutputStream(socket.getOutputStream());
             innee = new ObjectInputStream(socket.getInputStream());
 
-            Thread service = new Thread(new ServerHandler(socket, outee, innee));
+            Thread service = new Thread(new ServerHandler(socket, outee, innee, returnToGUI));
             service.start();
 
 
@@ -51,9 +55,9 @@ public class Client{
         private Socket clientSocket;
         private ObjectOutputStream outee;
         private ObjectInputStream innee;
-        Object getin;
+        Instruction getin;
 
-        public ServerHandler(Socket clientSocket, ObjectOutputStream out, ObjectInputStream in) {
+        public ServerHandler(Socket clientSocket, ObjectOutputStream out, ObjectInputStream in, ArrayList<Instruction> returnToGUI) {
             this.clientSocket = clientSocket;
             this.outee = out;
             this.innee = in;
@@ -63,20 +67,22 @@ public class Client{
         public void run() {
             while(true) {
                 try {
-                    if ((getin = (String) innee.readObject()) != null) {
-                        System.out.println(getin);
-
-                        //find this item
-                    }
+                    lock.lock();
+                        if ((getin = (Instruction) innee.readObject()) != null) {
+                            returnToGUI.add(getin);
+                            System.out.println(getin);
+                            //System.out.println(getin);
+                            //find this item
+                        }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+                finally {lock.unlock();}
             }
         }
     }
-
 
 
 //    public void setupNetworking(){
@@ -98,29 +104,25 @@ public class Client{
 //        }
 //    }
 
-    public void sendMessage(String message) throws IOException {
-        System.out.println(message);
-        LibraryItem ent = new LibraryItem("Book", "The Song of Achilles", "Madeline Miller", "n/a", -1);
-        System.out.println("Sending book: " + ent);
-        outee.writeObject(ent);
-        outee.flush();
 
-    }
     //set some bools so then it determines what the gui outputs
-    public void addNewUser(LibraryUsers usa) throws IOException {
-        System.out.printf("New User!! "+ usa);
+    public void processRequest(Instruction tellMe) throws IOException {
         outee.reset();
-        outee.writeObject(usa);
+        outee.writeObject(tellMe);
         outee.flush();
 
     }
 
-//    public boolean doesUserExist(LibraryUsers ussy){
-//
-//    }
+    public ArrayList<Instruction> recievemessage() throws InterruptedException {
+        Thread.sleep(200);
+        synchronized (lock) {
+            return new ArrayList<>(returnToGUI);
 
-    public void recievemessage(String message){
-        System.out.println(message);
+        }
+    }
+
+    public void clearmessage(){
+        returnToGUI.clear();
     }
 
 

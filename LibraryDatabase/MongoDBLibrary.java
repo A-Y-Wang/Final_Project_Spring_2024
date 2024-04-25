@@ -32,8 +32,6 @@ public class MongoDBLibrary {
     private static final String COLLECTION1 = "libraryusers";
     private static final String COLLECTION2 = "coverphotos";
 
-    //ArrayList<LibraryItem> PotenialBooks
-
 
     public static void main(String[] args) {
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
@@ -60,16 +58,21 @@ public class MongoDBLibrary {
         collection.findOneAndReplace(Filters.eq("title", items.getTitle()), items);
      }
 
-     public static void addUser(LibraryUsers libuser ){
+     public static boolean addUser(LibraryUsers libuser){
          LibraryUsers checkUser = collection1.find(Filters.eq("username", libuser.getUsername())).first();
          if(checkUser== null){
              collection1.insertOne(libuser);
-         }//return true is the user is in the database
+             return true;
+         }
+         return false; //returns false if the user is already in the database
 
      }
 
-     public boolean isUser(LibraryUsers libussy){
-         LibraryUsers checkUser = collection1.find(Filters.eq("username", libussy.getUsername())).first();
+     public static boolean isUser(LibraryUsers libussy){
+         LibraryUsers checkUser = collection1.find(Filters.and(
+                 Filters.eq("username", libussy.getUsername()),
+                 Filters.eq("password", libussy.getPassword())
+         )).first();
          if(checkUser == null){
              return false;
          }
