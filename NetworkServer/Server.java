@@ -17,6 +17,8 @@ import static LibraryDatabase.MongoDBLibrary.*;
 //database should store who currently has the book and then move them to who
 // had that book in a different database
 
+//Observer has a list of the clients which typically calls each client method to update the catalog with the new catalog information
+
 public class Server {
 
     ServerSocket serverSocket;
@@ -36,6 +38,7 @@ public class Server {
     }
     List<Socket> sockets = new ArrayList<Socket>();
     //each user has a socket for which they communicate to the database
+    //iterate through all the sockets and send the book -1 message
 
     private void setupNetworking(){
         try{
@@ -81,6 +84,9 @@ public class Server {
                     switch(recieve.getInstruction()){
                         case "New User":
                             System.out.println("got a library user");
+
+                            System.out.println(recieve.getLibraryUser());
+
                             boolean confirmedNewUser = addUser(recieve.getLibraryUser());
                             if (confirmedNewUser){
                                 outin.writeObject(new Instruction("New User Confirmed", null, recieve.getLibraryUser()));
@@ -95,7 +101,11 @@ public class Server {
 
                         case "Login":
                             System.out.println("attempt to login");
+
+                            System.out.println(recieve.getLibraryUser()); //look here!!!
+
                             boolean isLibraryUser = isUser(recieve.getLibraryUser());
+
                             if (isLibraryUser){
                                 outin.writeObject(new Instruction("User Exists", null, recieve.getLibraryUser()));
                                 outin.flush();
@@ -106,6 +116,19 @@ public class Server {
                             }
                             System.out.println("info sent to client");
                             break;
+
+                        case "Catalog":
+                            ArrayList<LibraryItem> catalog = getEntireCatalog();
+                            outin.writeObject(catalog);
+                            outin.flush();
+                            break;
+
+                        case "Borrow":
+                            break;
+
+                        case "Return":
+                            break;
+
 
                     }
 

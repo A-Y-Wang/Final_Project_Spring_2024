@@ -22,6 +22,9 @@ public class Instruction implements Serializable {
     public LibraryUsers getLibraryUser(){
         return this.thisUser;
     }
+    public void setInstruction(String instruction){
+        this.instruction = instruction;
+    }
 
     @Override
     public String toString(){

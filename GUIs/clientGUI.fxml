@@ -23,7 +23,7 @@
                   <Image url="@mainbackdrop.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="96.0" fitWidth="95.0" layoutX="376.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="89.0" fitWidth="95.0" layoutX="386.0" layoutY="497.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@tighnari_emote.png" />
                </image>
@@ -33,16 +33,12 @@
                   <Font name="Cambria" size="14.0" />
                </font>
             </Button>
-            <VBox layoutX="14.0" layoutY="79.0" prefHeight="506.0" prefWidth="360.0">
+            <VBox layoutX="14.0" layoutY="79.0" prefHeight="507.0" prefWidth="378.0">
                <children>
-                  <ScrollPane prefHeight="504.0" prefWidth="362.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="365.0">
-                           <children>
-                              <VBox fx:id="bookbox" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
-                           </children>
-                        </AnchorPane>
-                    </content>
+                  <ScrollPane fx:id="catalogscroll" hbarPolicy="AS_NEEDED" prefHeight="519.0" prefWidth="378.0" vbarPolicy="AS_NEEDED">
+                     <content>
+                        <VBox fx:id="bookbox" prefWidth="362.0" />
+                     </content>
                   </ScrollPane>
                </children>
             </VBox>
@@ -52,26 +48,45 @@
                      <children>
                         <VBox prefHeight="124.0" prefWidth="108.0">
                            <children>
-                              <CheckBox mnemonicParsing="false" prefHeight="19.0" prefWidth="106.0" text="All" />
-                              <CheckBox mnemonicParsing="false" text="Books">
+                              <CheckBox fx:id="AllCheck" mnemonicParsing="false" onAction="#checkCheckBox" prefHeight="19.0" prefWidth="106.0" text="All">
+                                 <font>
+                                    <Font name="Cambria" size="12.0" />
+                                 </font>
                                  <padding>
                                     <Insets top="6.0" />
                                  </padding>
                               </CheckBox>
-                              <CheckBox mnemonicParsing="false" text="AudioBooks">
+                              <CheckBox fx:id="BookCheck" mnemonicParsing="false" onAction="#checkCheckBox" text="Books">
+                                 <font>
+                                    <Font name="Cambria" size="12.0" />
+                                 </font>
                                  <padding>
                                     <Insets top="6.0" />
                                  </padding>
                               </CheckBox>
-                              <CheckBox mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Graphic Novels">
+                              <CheckBox fx:id="AudioBookCheck" mnemonicParsing="false" onAction="#checkCheckBox" text="AudioBooks">
                                  <padding>
                                     <Insets top="6.0" />
                                  </padding>
+                                 <font>
+                                    <Font name="Cambria" size="12.0" />
+                                 </font>
                               </CheckBox>
-                              <CheckBox mnemonicParsing="false" text="Movies">
+                              <CheckBox fx:id="GraphicCheck" mnemonicParsing="false" onAction="#checkCheckBox" prefHeight="26.0" prefWidth="125.0" text="Graphic Novels">
                                  <padding>
                                     <Insets top="6.0" />
                                  </padding>
+                                 <font>
+                                    <Font name="Cambria" size="12.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="MovieCheck" mnemonicParsing="false" onAction="#checkCheckBox" text="Movies">
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Cambria" size="12.0" />
+                                 </font>
                               </CheckBox>
                            </children>
                         </VBox>
@@ -82,31 +97,31 @@
                   <Font name="Cambria" size="14.0" />
                </font>
             </TitledPane>
-            <TextField layoutX="124.0" layoutY="52.0" prefHeight="27.0" prefWidth="217.0">
+            <TextField layoutX="124.0" layoutY="52.0" prefHeight="27.0" prefWidth="207.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <Button layoutX="340.0" layoutY="52.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" text="Go" textOverrun="CLIP">
+            <Button fx:id="browseButton" layoutX="330.0" layoutY="52.0" mnemonicParsing="false" onAction="#showBooks" prefHeight="28.0" prefWidth="62.0" text="Browse" textOverrun="CLIP">
                <font>
                   <Font name="Cambria" size="13.0" />
                </font>
             </Button>
-            <Label layoutX="14.0" layoutY="16.0" prefHeight="20.0" prefWidth="428.0" text="The House of Daena Public Library - Catalog" textFill="#fff9f9">
+            <Label layoutX="60.0" layoutY="19.0" prefHeight="20.0" prefWidth="446.0" text="The House of Daena Public Library - Catalog" textFill="#fff9f9">
                <font>
-                  <Font name="FangSong" size="18.0" />
+                  <Font name="FangSong" size="20.0" />
                </font>
             </Label>
-            <VBox layoutX="385.0" layoutY="52.0" prefHeight="430.0" prefWidth="246.0">
+            <VBox layoutX="403.0" layoutY="52.0" prefHeight="430.0" prefWidth="246.0">
                <children>
                   <Label prefHeight="18.0" prefWidth="65.0" text="My Items" textFill="WHITE">
                      <font>
                         <Font name="Cambria" size="15.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="463.0" prefWidth="246.0">
+                  <ScrollPane prefHeight="463.0" prefWidth="246.0" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="414.0" prefWidth="250.0" />
+                        <VBox fx:id="myItems"  prefWidth="246.0" />
                      </content>
                   </ScrollPane>
                </children>
@@ -121,7 +136,16 @@
                   <Font name="Cambria" size="13.0" />
                </font>
             </Label>
-            <TextField layoutX="660.0" layoutY="13.0" prefHeight="26.0" prefWidth="150.0" />
+            <Label fx:id="userLabel" layoutX="666.0" layoutY="3.0" prefHeight="26.0" prefWidth="166.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="Cambria" size="16.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="60.0" fitWidth="70.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@mgppv4lbhka91.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

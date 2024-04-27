@@ -30,7 +30,7 @@
             <Font name="FangSong" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="newuser" layoutX="363.0" layoutY="422.0" mnemonicParsing="false" onAction="#newuserButton" prefHeight="35.0" prefWidth="90.0" text="New User?">
+      <Button fx:id="newuser" layoutX="362.0" layoutY="429.0" mnemonicParsing="false" onAction="#newuserButton" prefHeight="30.0" prefWidth="79.0" text="Sign up">
          <font>
             <Font name="FangSong" size="15.0" />
          </font>
@@ -40,7 +40,7 @@
             <Font name="FangSong" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="logon" layoutX="674.0" layoutY="473.0" mnemonicParsing="false" onAction="#logonButton" prefHeight="50.0" prefWidth="111.0" text="Log on">
+      <Button fx:id="logon" layoutX="674.0" layoutY="473.0" mnemonicParsing="false" onAction="#logonButton" prefHeight="50.0" prefWidth="111.0" text="Log in">
          <font>
             <Font name="Gabriola" size="26.0" />
          </font>

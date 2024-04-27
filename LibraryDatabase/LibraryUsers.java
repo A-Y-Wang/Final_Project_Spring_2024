@@ -3,8 +3,8 @@ package LibraryDatabase;
 import java.io.Serializable;
 
 public class LibraryUsers implements Serializable {
-    private String username;
-    private String password;
+    public String username;
+    public String password;
 
     public LibraryUsers(){}
 

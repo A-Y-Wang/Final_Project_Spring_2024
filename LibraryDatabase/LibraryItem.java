@@ -7,11 +7,11 @@ import java.io.Serializable;
 
 public class LibraryItem implements Serializable {
 
-    private String type;
-    private String title;
-    private String author;
-    private String illustrator;
-    private int amount;
+    public String type; //Book, AudioBook, Graphic Novel, Movie
+    public String title;
+    public String author;
+    public String illustrator;
+    public int amount;
     //private double rating;
 
     public LibraryItem(){}

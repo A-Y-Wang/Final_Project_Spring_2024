@@ -1,36 +1,29 @@
 package GUIs;
 
+import LibraryDatabase.LibraryUsers;
 import NetworkClient.Client;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 public class MainGUI extends Application {
 
-    Client client = new Client();
+   // Client client = new Client();
 
         @Override
-        public void start(Stage applicationStage) throws IOException {
+        public void start(Stage applicationStage) throws IOException, InterruptedException {
             openLogin(applicationStage);
 
         }
 
-        public void openLogin(Stage stage) throws IOException {
+        public void openLogin(Stage stage) throws IOException, InterruptedException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
-            Scene scene = new Scene(loader.load());
-
-            LoginController loginController = loader.getController();
-            loginController.setMainApp(this);
-            loginController.setClient(client);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
 
             stage.setTitle("Log In");
             stage.setScene(scene);
@@ -38,15 +31,14 @@ public class MainGUI extends Application {
             stage.show();
 
         }
-        public void loadMainScreen(Stage stage) throws IOException {
+        public static void loadMainScreen(Stage stage, LibraryUsers libraryUsers) throws IOException, ClassNotFoundException {
 
             FXMLLoader loader1 = new FXMLLoader(MainGUI.class.getResource("clientGUI.fxml"));
-            Parent root = loader1.load();
 
+            Parent root = loader1.load();
             MainMenuController mainController = loader1.getController();
-            mainController.setMainApp(this);
-            mainController.setClient(client);
-            //Scene scene = new Scene(root);
+            mainController.setLibraryUser(libraryUsers);
+
             root.setScaleY(1.5);
             root.setScaleX(1.5);
             Scene scene = new Scene(root, 1350, 900);

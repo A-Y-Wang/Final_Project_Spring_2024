@@ -24,13 +24,11 @@ public class Client{
 
     //manages user log in retrieving books from the server??
     //connect to gui so clients can see what they retrieved from the Library
-    Lock lock = new ReentrantLock();
     private Socket socket;
-    public ArrayList<Instruction> returnToGUI = new ArrayList<>();
     ObjectOutputStream outee;
     ObjectInputStream innee;
     Instruction getin;
-
+    ArrayList<LibraryItem> initialCatalog;
 
 //    public static void main (String[] args) {
 //        new Client().setupNetworking();
@@ -48,17 +46,25 @@ public class Client{
         }
     }
     //set some bools so then it determines what the gui outputs
-    public ArrayList<Instruction> processRequest(Instruction tellMe) throws IOException, ClassNotFoundException {
+    public Instruction processRequest(Instruction tellMe) throws IOException, ClassNotFoundException {
         outee.reset();
         outee.writeObject(tellMe);
         outee.flush();
         getin = (Instruction) innee.readObject();
-        returnToGUI.add(getin);
-        return new ArrayList<>(returnToGUI);
+        //or just return the array list???
+        return getin;
+    }
+
+    public ArrayList<LibraryItem> getCatalog(Instruction getlog) throws IOException, ClassNotFoundException {
+        outee.reset();
+        outee.writeObject(getlog);
+        outee.flush();
+        initialCatalog = (ArrayList<LibraryItem>) innee.readObject(); //holy shit plz work
+        return initialCatalog;
     }
 
     public void clearmessage(){
-        returnToGUI.clear();
+        //returnToGUI.clear();
     }
 
 
