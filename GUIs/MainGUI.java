@@ -31,13 +31,13 @@ public class MainGUI extends Application {
             stage.show();
 
         }
-        public static void loadMainScreen(Stage stage, LibraryUsers libraryUsers) throws IOException, ClassNotFoundException {
+        public static void loadMainScreen(Stage stage, LibraryUsers libraryUsers, Client cli) throws IOException, ClassNotFoundException, InterruptedException {
 
             FXMLLoader loader1 = new FXMLLoader(MainGUI.class.getResource("clientGUI.fxml"));
 
             Parent root = loader1.load();
             MainMenuController mainController = loader1.getController();
-            mainController.setLibraryUser(libraryUsers);
+            mainController.setLibraryUserandClient(libraryUsers, cli);
 
             root.setScaleY(1.5);
             root.setScaleX(1.5);

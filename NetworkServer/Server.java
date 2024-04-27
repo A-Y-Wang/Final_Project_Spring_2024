@@ -117,18 +117,31 @@ public class Server {
                             System.out.println("info sent to client");
                             break;
 
-                        case "Catalog":
+                        case "Catalog": //return arraylist
                             ArrayList<LibraryItem> catalog = getEntireCatalog();
                             outin.writeObject(catalog);
                             outin.flush();
                             break;
 
-                        case "Borrow":
+                        case "My Catalog":
+                            ArrayList<Instruction> MYcatalog = getMyLog(recieve.getLibraryUser());
+                            outin.writeObject(MYcatalog);
+                            outin.flush();
                             break;
 
-                        case "Return":
+                        case "Borrow": //return arraylist
+                            BorrowItem(recieve.getLibraryItem(), recieve.getLibraryUser());
+                            ArrayList<LibraryItem> catalogminus = getEntireCatalog();
+                            outin.writeObject(catalogminus);
+                            outin.flush();
                             break;
 
+                        case "Return": //return arraylist
+                            ReturnItem(recieve.getLibraryItem(), recieve.getLibraryUser());
+                            ArrayList<LibraryItem> catalogplus = getEntireCatalog();
+                            outin.writeObject(catalogplus);
+                            outin.flush();
+                            break;
 
                     }
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -37,72 +36,31 @@
                <children>
                   <ScrollPane fx:id="catalogscroll" hbarPolicy="AS_NEEDED" prefHeight="519.0" prefWidth="378.0" vbarPolicy="AS_NEEDED">
                      <content>
-                        <VBox fx:id="bookbox" prefWidth="362.0" />
+                        <VBox fx:id="bookbox" prefWidth="362.0">
+                           <children>
+                              <TabPane fx:id="tabCatalog" prefWidth="362.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab fx:id="Bookstab" text="Books">
+                                  </Tab>
+                                    <Tab fx:id="AudioBookstab" text="Audio Books">
+                                    </Tab>
+                                    <Tab fx:id="GNTab" text="Graphic Novels">
+                                    </Tab>
+                                    <Tab fx:id="MovieTab" text="Movies">
+                                    </Tab>
+                                </tabs>
+                              </TabPane>
+                           </children></VBox>
                      </content>
                   </ScrollPane>
                </children>
             </VBox>
-            <TitledPane animated="false" layoutX="14.0" layoutY="52.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="111.0" text="All">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="124.0" prefWidth="108.0">
-                           <children>
-                              <CheckBox fx:id="AllCheck" mnemonicParsing="false" onAction="#checkCheckBox" prefHeight="19.0" prefWidth="106.0" text="All">
-                                 <font>
-                                    <Font name="Cambria" size="12.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                              </CheckBox>
-                              <CheckBox fx:id="BookCheck" mnemonicParsing="false" onAction="#checkCheckBox" text="Books">
-                                 <font>
-                                    <Font name="Cambria" size="12.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                              </CheckBox>
-                              <CheckBox fx:id="AudioBookCheck" mnemonicParsing="false" onAction="#checkCheckBox" text="AudioBooks">
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Cambria" size="12.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="GraphicCheck" mnemonicParsing="false" onAction="#checkCheckBox" prefHeight="26.0" prefWidth="125.0" text="Graphic Novels">
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Cambria" size="12.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="MovieCheck" mnemonicParsing="false" onAction="#checkCheckBox" text="Movies">
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Cambria" size="12.0" />
-                                 </font>
-                              </CheckBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-              </content>
-               <font>
-                  <Font name="Cambria" size="14.0" />
-               </font>
-            </TitledPane>
-            <TextField layoutX="124.0" layoutY="52.0" prefHeight="27.0" prefWidth="207.0">
+            <TextField layoutX="14.0" layoutY="52.0" prefHeight="27.0" prefWidth="317.0">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <Button fx:id="browseButton" layoutX="330.0" layoutY="52.0" mnemonicParsing="false" onAction="#showBooks" prefHeight="28.0" prefWidth="62.0" text="Browse" textOverrun="CLIP">
+            <Button fx:id="browseButton" layoutX="330.0" layoutY="52.0" mnemonicParsing="false" onAction="#showBooks" prefHeight="28.0" prefWidth="62.0" text="Search" textOverrun="CLIP">
                <font>
                   <Font name="Cambria" size="13.0" />
                </font>
@@ -119,9 +77,9 @@
                         <Font name="Cambria" size="15.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="463.0" prefWidth="246.0" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+                  <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="463.0" prefWidth="246.0" vbarPolicy="AS_NEEDED">
                      <content>
-                        <VBox fx:id="myItems"  prefWidth="246.0" />
+                        <VBox fx:id="myItems" prefWidth="246.0" />
                      </content>
                   </ScrollPane>
                </children>

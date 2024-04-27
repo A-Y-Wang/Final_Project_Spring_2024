@@ -85,13 +85,16 @@ public class LoginController {
                         case "New User Denied":
                             System.out.println(test.getLibraryUser());;
                             System.out.println("New User No");
+                            System.out.println("New User No");
                             break;
                     }
 
-                client.clearmessage();
+                //client.clearmessage();
             } catch (IOException ex) {}
 
-             catch (ClassNotFoundException ex) { }
+             catch (ClassNotFoundException ex) { } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
             popupStage.close();
         });
         Scene popupScene = new Scene(popupContent, 300, 200);
@@ -113,7 +116,7 @@ public class LoginController {
                     passy = test.getLibraryUser().getPassword();
 
                     Stage stagey = (Stage)logon.getScene().getWindow();
-                    MainGUI.loadMainScreen(stagey, new LibraryUsers(user,passy));
+                    MainGUI.loadMainScreen(stagey, new LibraryUsers(user,passy), client);
 
                     break;
 
@@ -138,7 +141,7 @@ public class LoginController {
                     break;
             }
 
-        client.clearmessage();
+        //client.clearmessage();
     }
 
 

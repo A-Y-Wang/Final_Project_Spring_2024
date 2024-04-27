@@ -3,9 +3,11 @@ package LibraryDatabase;
 import java.io.Serializable;
 
 public class Instruction implements Serializable {
-    private String instruction;
-    private LibraryItem libraryItem;
-    private LibraryUsers thisUser;
+    public String instruction;
+    public LibraryItem libraryItem;
+    public LibraryUsers thisUser;
+
+    public Instruction(){}
 
     public Instruction(String instruction, LibraryItem libraryItem, LibraryUsers thisUser){
         this.instruction = instruction;
