@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static LibraryDatabase.MongoDBLibrary.*;
 //database should store who currently has the book and then move them to who
@@ -22,6 +23,7 @@ import static LibraryDatabase.MongoDBLibrary.*;
 public class Server {
 
     ServerSocket serverSocket;
+    ReentrantLock lock = new ReentrantLock();
 
     public static void main(String[] args){
         //make new items and add it to te database
@@ -37,6 +39,7 @@ public class Server {
 
     }
     List<Socket> sockets = new ArrayList<Socket>();
+    List<ObjectOutputStream> outsocket = new ArrayList<>();
     //each user has a socket for which they communicate to the database
     //iterate through all the sockets and send the book -1 message
 
@@ -54,6 +57,8 @@ public class Server {
 
                 outin = new ObjectOutputStream(clientSocket.getOutputStream());
                 inout = new ObjectInputStream(clientSocket.getInputStream());
+
+                outsocket.add(outin);
 
                 Thread clients = new Thread(new ClientHandler(clientSocket, outin, inout));
                 clients.start();
@@ -79,6 +84,7 @@ public class Server {
 
         public void run() {
             while(true) {
+                //lock.lock();
                 try {
                     Instruction recieve = (Instruction)inout.readObject();
                     switch(recieve.getInstruction()){
@@ -119,8 +125,8 @@ public class Server {
 
                         case "Catalog": //return arraylist
                             ArrayList<LibraryItem> catalog = getEntireCatalog();
-                            outin.writeObject(catalog);
-                            outin.flush();
+                                outin.writeObject(catalog);
+                                outin.flush();//}
                             break;
 
                         case "My Catalog":
@@ -132,14 +138,23 @@ public class Server {
                         case "Borrow": //return arraylist
                             BorrowItem(recieve.getLibraryItem(), recieve.getLibraryUser());
                             ArrayList<LibraryItem> catalogminus = getEntireCatalog();
-                            outin.writeObject(catalogminus);
-                            outin.flush();
+                            for (ObjectOutputStream oos: outsocket){
+                                oos.writeObject(catalogminus);
+                                oos.flush();}
                             break;
 
                         case "Return": //return arraylist
                             ReturnItem(recieve.getLibraryItem(), recieve.getLibraryUser());
                             ArrayList<LibraryItem> catalogplus = getEntireCatalog();
-                            outin.writeObject(catalogplus);
+                            for (ObjectOutputStream oos: outsocket){
+                                oos.writeObject(catalogplus);
+                                oos.flush();};
+                            break;
+
+                        case "Reset Password":
+                            resetUser(recieve.getLibraryUser());
+                            Instruction place = new Instruction("reeee", null, null);
+                            outin.writeObject(place);
                             outin.flush();
                             break;
 
@@ -148,7 +163,10 @@ public class Server {
                 }
                 catch (IOException | ClassNotFoundException ioe) {
                 }
-            }
+//                finally {
+//                    lock.unlock();
+//                }
+            } //only one thread can get certain things at a time
         }
     }
 }

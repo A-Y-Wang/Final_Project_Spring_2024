@@ -67,10 +67,10 @@ public class Client{
                         //Object message = innee.readObject()
                         System.out.println(message);
                         if (message instanceof ArrayList) {
-                            ArrayList<Object> mycatalog = (ArrayList<Object>) message;
-                            if (mycatalog.get(0) instanceof LibraryItem) {
+//                            ArrayList<Object> mycatalog = (ArrayList<Object>) message;
+//                            if (mycatalog.get(0) instanceof LibraryItem) {
                                 mainController.update((ArrayList<LibraryItem>) message);
-                            }
+                            //}
 //                            if (mycatalog.get(0) instanceof Instruction) {
 //                                mainController.claimMyItems((ArrayList<Instruction>) message);
 //                            }

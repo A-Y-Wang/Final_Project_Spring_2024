@@ -19,7 +19,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000000bf" height="62.0" layoutX="88.0" layoutY="154.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="615.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000000bf" height="193.0" layoutX="259.0" layoutY="278.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="285.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000000bf" height="219.0" layoutX="259.0" layoutY="278.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="285.0" />
       <TextField fx:id="username" layoutX="276.0" layoutY="324.0" prefHeight="35.0" prefWidth="251.0" promptText="Username">
          <opaqueInsets>
             <Insets />
@@ -30,7 +30,7 @@
             <Font name="FangSong" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="newuser" layoutX="362.0" layoutY="429.0" mnemonicParsing="false" onAction="#newuserButton" prefHeight="30.0" prefWidth="79.0" text="Sign up">
+      <Button fx:id="newuser" layoutX="362.0" layoutY="448.0" mnemonicParsing="false" onAction="#newuserButton" prefHeight="30.0" prefWidth="79.0" text="Sign up">
          <font>
             <Font name="FangSong" size="15.0" />
          </font>
@@ -46,5 +46,10 @@
          </font>
       </Button>
       <PasswordField fx:id="password" layoutX="275.0" layoutY="374.0" prefHeight="35.0" prefWidth="251.0" promptText="Password" />
+      <Button fx:id="forgotpassword" layoutX="354.0" layoutY="409.0" mnemonicParsing="false" onAction="#passwordReset" prefHeight="13.0" prefWidth="96.0" text="Forgot Password?">
+         <font>
+            <Font name="FangSong" size="9.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

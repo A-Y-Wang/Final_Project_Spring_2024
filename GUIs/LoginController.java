@@ -45,6 +45,9 @@ public class LoginController {
     @FXML
     VBox bookbox;
 
+    @FXML
+    Button forgotpassword;
+
 
     public void initialize(){
         client = new Client();
@@ -142,6 +145,48 @@ public class LoginController {
             }
 
         //client.clearmessage();
+    }
+
+    public void passwordReset(){
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);  // Block events to other windows
+        popupStage.setTitle("Forgot Your Password?");
+
+        // Create a button to close the popup
+        Label label = new Label("Please enter your username and \n*new* password");
+        Button closeButton = new Button("Done");
+        TextField userNAME = new TextField();
+        TextField passWORD = new TextField();
+        VBox vbox = new VBox();
+        userNAME.setPromptText("Username");
+        passWORD.setPromptText("Password");
+
+        // Layout for the popup
+        StackPane popupContent = new StackPane();
+        popupContent.getChildren().add(vbox);
+        vbox.getChildren().add(label);
+        vbox.getChildren().add(userNAME);
+        vbox.getChildren().add(passWORD);
+        vbox.getChildren().add(closeButton);
+
+        closeButton.setOnAction(e -> {
+            Instruction resetloser = new Instruction("Reset Password", null, new LibraryUsers(userNAME.getText(), passWORD.getText()));
+            try {
+                client.processRequest(resetloser);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            popupStage.close();
+        });
+
+        Scene popupScene = new Scene(popupContent, 300, 200);
+        popupStage.setScene(popupScene);
+        popupStage.showAndWait();
+
     }
 
 

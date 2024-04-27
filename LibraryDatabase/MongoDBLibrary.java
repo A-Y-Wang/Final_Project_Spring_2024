@@ -143,9 +143,8 @@ public class MongoDBLibrary {
      }
 
     public static void BorrowItem(LibraryItem items, LibraryUsers user) {
-        items.setAmount(1);
+        //items.setAmount(1);
         //collection2.insertOne(new Instruction("Currently Borrowing", items, user));
-
 
         Bson filter = Filters.and(
                 Filters.eq("title", items.getTitle()),
@@ -187,6 +186,11 @@ public class MongoDBLibrary {
         items.setAmount(newAmount);
 
         collection.findOneAndReplace(filter,items);
+
+    }
+    public static void resetUser(LibraryUsers libaryU){
+        collection1.findOneAndReplace(Filters.eq("username", libaryU.getUsername()), libaryU);
+        System.out.println(libaryU);
 
     }
 

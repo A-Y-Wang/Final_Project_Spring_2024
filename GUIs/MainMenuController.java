@@ -6,13 +6,16 @@ import LibraryDatabase.LibraryUsers;
 import NetworkClient.Client;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -77,6 +80,9 @@ public class MainMenuController {
 
     @FXML
     Tab MovieTab;
+
+    @FXML
+    Button test;
 
 
 
@@ -267,6 +273,43 @@ public void claimMyItems(ArrayList<Instruction> myOwnBooks){
     }
     public void showBooks(){}
 
-    public void signoutButton(){
+    public void signoutButton() {
+
+        Button yes = new Button("Yes");
+        Button no = new Button("No");
+
+        HBox help = new HBox();
+        help.setSpacing(10);
+        help.getChildren().add(yes);
+        help.getChildren().add(no);
+
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);  // Block events to other windows
+        popupStage.setTitle("Sign Out Window");
+        AnchorPane popupContent = new AnchorPane();
+        VBox leave = new VBox();
+        popupContent.getChildren().add(leave);
+
+        Label getout = new Label("Are you sure you want to sign out?");
+        leave.getChildren().add((getout));
+        leave.getChildren().add(help);
+
+        no.setOnAction(e ->
+                popupStage.close());
+
+        yes.setOnAction(ee -> {
+            popupStage.close();
+            Platform.exit();
+        });
+
+        Scene popupScene = new Scene(popupContent, 320, 120);
+        popupStage.setScene(popupScene);
+        popupStage.showAndWait();
     }
+
+    public void test() throws IOException, ClassNotFoundException {
+        LibraryItem HeartStopper = new LibraryItem("Graphic Novel", "Heart Stopper 1", "Alice Oseman", "Alice Oseman", 2);
+        client.getCatalog(new Instruction("Borrow", HeartStopper, libaryUser));
+    }
+
 }
