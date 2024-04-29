@@ -67,15 +67,19 @@ public class Client{
                         //Object message = innee.readObject()
                         System.out.println(message);
                         if (message instanceof ArrayList) {
-//                            ArrayList<Object> mycatalog = (ArrayList<Object>) message;
-//                            if (mycatalog.get(0) instanceof LibraryItem) {
-                                mainController.update((ArrayList<LibraryItem>) message);
-                            //}
-//                            if (mycatalog.get(0) instanceof Instruction) {
-//                                mainController.claimMyItems((ArrayList<Instruction>) message);
+                            ArrayList<Object> mycatalog = (ArrayList<Object>) message;
+                            if (mycatalog.get(0) instanceof LibraryItem) {
+                                mainController.update((ArrayList<LibraryItem>) message); //if an arraylist of library items, put to update
+                            }
 //                            }
-                        } else {
-                            messageQueue.put(message);
+                        }
+                        if (message instanceof ArrayList) {
+                            ArrayList<Object> mycatalog = (ArrayList<Object>) message;
+                            {
+                                if (mycatalog.get(0) instanceof Instruction) {
+                                    messageQueue.put(message);
+                                }
+                            }
                         }
                     }
                 }
@@ -87,7 +91,7 @@ public class Client{
 
 
     //set some bools so then it determines what the gui outputs
-    public Instruction processRequest(Instruction tellMe) throws IOException, ClassNotFoundException, InterruptedException {
+    public ArrayList<Instruction> processRequest(Instruction tellMe) throws IOException, ClassNotFoundException, InterruptedException {
         outee.reset();
         outee.writeObject(tellMe);
         outee.flush();
@@ -95,16 +99,12 @@ public class Client{
         //System.out.println(getin);
         //or just return the array list???
         getin = messageQueue.take();
-        return (Instruction) getin;
+        //messageQueue.clear();
+
+        return (ArrayList<Instruction>) getin;
     }
 
     public void getCatalog(Instruction getlog) throws IOException, ClassNotFoundException {
-        outee.reset();
-        outee.writeObject(getlog);
-        outee.flush();
-    }
-
-    public void getMyCatalog(Instruction getlog) throws IOException, ClassNotFoundException {
         outee.reset();
         outee.writeObject(getlog);
         outee.flush();

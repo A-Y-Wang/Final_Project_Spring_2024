@@ -91,33 +91,43 @@ public class Server {
                         case "New User":
                             System.out.println("got a library user");
 
+                            ArrayList<Instruction> send = new ArrayList<>();
+
                             System.out.println(recieve.getLibraryUser());
 
                             boolean confirmedNewUser = addUser(recieve.getLibraryUser());
                             if (confirmedNewUser){
-                                outin.writeObject(new Instruction("New User Confirmed", null, recieve.getLibraryUser()));
+                                Instruction confirm = new Instruction("New User Confirmed", null, recieve.getLibraryUser());
+                                send.add(confirm);
+                                outin.writeObject(send);
                                 outin.flush();
                             }
                             else {
-                                outin.writeObject(new Instruction("New User Denied", null, recieve.getLibraryUser()));
+                                Instruction confirm = new Instruction("New User Denied", null, recieve.getLibraryUser());
+                                send.add(confirm);
+                                outin.writeObject(send);
                                 outin.flush();
                             }
-                            System.out.println("info sent to client");
                             break;
 
                         case "Login":
                             System.out.println("attempt to login");
 
                             System.out.println(recieve.getLibraryUser()); //look here!!!
+                            ArrayList<Instruction> go = new ArrayList<>();
 
                             boolean isLibraryUser = isUser(recieve.getLibraryUser());
 
                             if (isLibraryUser){
-                                outin.writeObject(new Instruction("User Exists", null, recieve.getLibraryUser()));
+                                Instruction exist = new Instruction("User Exists", null, recieve.getLibraryUser());
+                                go.add(exist);
+                                outin.writeObject(go);
                                 outin.flush();
                             }
                             else {
-                                outin.writeObject(new Instruction("User Doesn't Exist", null, recieve.getLibraryUser()));
+                                Instruction exist = new Instruction("User Doesn't Exists", null, recieve.getLibraryUser());
+                                go.add(exist);
+                                outin.writeObject(go);
                                 outin.flush();
                             }
                             System.out.println("info sent to client");

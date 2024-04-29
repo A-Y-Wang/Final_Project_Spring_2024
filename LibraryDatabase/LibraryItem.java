@@ -8,18 +8,21 @@ import java.io.Serializable;
 public class LibraryItem implements Serializable {
 
     //public String ID;
+    public String user;
+    public String ImageURL;
     public String type; //Book, AudioBook, Graphic Novel, Movie
     public String title;
     public String author;
     public String illustrator;
-    //public LibraryUsers libusa;
     public int amount;
     //private double rating;
 
     public LibraryItem(){}
 
-    public LibraryItem(String typee, String tit, String aut, String ill, int num){
+    public LibraryItem(String user, String url, String typee, String tit, String aut, String ill, int num){
         //this.ID = id;
+        this.user = "";
+        this.ImageURL = url;
         this.type= typee;
         this.title = tit;
         this.author = aut;
@@ -28,6 +31,16 @@ public class LibraryItem implements Serializable {
         this.amount = num;
 
     }
+    public String getUser(){
+        return user;
+    }
+
+    public void setUser(String usee){
+        this.user = usee;
+    }
+
+    public String getimageURL(){return this.ImageURL;}
+
     public String getType(){
         return this.type;
     }

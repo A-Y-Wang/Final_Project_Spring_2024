@@ -78,19 +78,24 @@ public class LoginController {
         closeButton.setOnAction(e -> {
             try {
                 LibraryUsers NewUser = new LibraryUsers(userNAME.getText(), passWORD.getText());
-                Instruction test = client.processRequest(new Instruction("New User", null, NewUser));
+                ArrayList<Instruction> testee = client.processRequest(new Instruction("New User", null, NewUser));
+
+                for(Instruction test : testee) {
 
                     switch (test.getInstruction()) {
                         case "New User Confirmed":
-                            System.out.println(test.getLibraryUser());;
+                            System.out.println(test.getLibraryUser());
+                            ;
                             System.out.println("New User Yes");
                             break;
                         case "New User Denied":
-                            System.out.println(test.getLibraryUser());;
+                            System.out.println(test.getLibraryUser());
+                            ;
                             System.out.println("New User No");
                             System.out.println("New User No");
                             break;
                     }
+                }
 
                 //client.clearmessage();
             } catch (IOException ex) {}
@@ -109,22 +114,26 @@ public class LoginController {
     public void logonButton() throws IOException, InterruptedException, ClassNotFoundException {
 
         LibraryUsers login = new LibraryUsers(username.getText(), password.getText());
-        Instruction test = client.processRequest(new Instruction("Login", null, login ));
+        ArrayList<Instruction> testee = client.processRequest(new Instruction("Login", null, login ));
+
+        for (Instruction test: testee){
 
             switch (test.getInstruction()) {
                 case "User Exists":
-                    System.out.println(test.getLibraryUser());;
+                    System.out.println(test.getLibraryUser());
+                    ;
                     System.out.println("Valid User");
                     user = test.getLibraryUser().getUsername();
                     passy = test.getLibraryUser().getPassword();
 
-                    Stage stagey = (Stage)logon.getScene().getWindow();
-                    MainGUI.loadMainScreen(stagey, new LibraryUsers(user,passy), client);
+                    Stage stagey = (Stage) logon.getScene().getWindow();
+                    MainGUI.loadMainScreen(stagey, new LibraryUsers(user, passy), client);
 
                     break;
 
-                case "User Doesn't Exist":
-                    System.out.println(test.getLibraryUser());;
+                case "User Doesn't Exists":
+                    System.out.println(test.getLibraryUser());
+                    ;
                     System.out.println("Not Valid User");
 
                     username.clear();
@@ -142,6 +151,7 @@ public class LoginController {
                     popupStage.showAndWait();
 
                     break;
+             }
             }
 
         //client.clearmessage();
